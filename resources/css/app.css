@@ -1,0 +1,21 @@
+@import 'element-plus/dist/index.css';
+@import 'element-plus/theme-chalk/dark/css-vars.css';
+
+:root {
+  font-family: var(--el-font-family);
+}
+.el-icon {
+  margin: 5px;
+}
+.common-layout .el-header {
+  background-color: var(--el-color-primary-light-7);
+  color: var(--el-text-color-primary);
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.common-layout .el-main {
+  background-color: var(--el-color-primary-light-9);
+  color: var(--el-text-color-primary);
+}

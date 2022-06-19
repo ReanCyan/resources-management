@@ -10,7 +10,9 @@
         "production": "mix --production"
     },
     "devDependencies": {
+        "@element-plus/icons-vue": "^2.0.5",
         "axios": "^0.25",
+        "element-plus": "^2.2.6",
         "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",
         "postcss": "^8.1.14",
