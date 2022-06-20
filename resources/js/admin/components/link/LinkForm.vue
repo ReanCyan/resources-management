@@ -14,8 +14,8 @@
     </el-form-item>
 
     <el-form-item>
-      <el-button type="primary" @click="onSubmit()" :icon="CirclePlus" plain> Create </el-button>
-      <el-button @click="resetForm()"> Reset </el-button>
+      <el-button :type="submitBtn.type" @click="handleSubmit()" :icon="submitBtn.icon" plain> {{ submitBtn.text }} </el-button>
+      <el-button @click="handleReset()"> Reset </el-button>
     </el-form-item>
 
   </el-form>
@@ -23,29 +23,68 @@
 
 <script>
 import { ref } from 'vue';
+import { ElMessage } from 'element-plus';
 
-function getDefaultForm() {
+function getSubmitBtnDefault () {
   return {
-    title: '',
-    link: '',
-    open_in_new_tab: false
-  };
+    icon: ref('CirclePlus'),
+    type: 'primary',
+    text: 'Create'
+  }
 }
 
 export default {
   name: 'LinkForm',
   data () {
     return {
-      CirclePlus: ref('CirclePlus'),
-      form: getDefaultForm()
+      submitBtn: getSubmitBtnDefault()
+    }
+  },
+  watch: {
+    form (newVal, oldVal) {
+      if(newVal.isEdit) {
+        this.submitBtn.icon = ref('Edit');
+        this.submitBtn.type = 'warning';
+        this.submitBtn.text = 'Edit';
+      }
+      else {
+        this.submitBtn.icon = ref('CirclePlus');
+        this.submitBtn.type = 'primary';
+        this.submitBtn.text = 'Create';
+      }
+    }
+  },
+  props: {
+    form: {
+      type: Object,
+      required: true
     }
   },
   methods: {
-    onSubmit () {
-      console.log(this.form);
+    handleSubmit () {
+      if (!this.validateForm()) {
+        ElMessage.error('Please fill all fields correctly!');
+        return;
+      }
+
+      this.$emit('onSubmit', this.form);
     },
-    resetForm () {
-      this.form = getDefaultForm();
+    handleReset () {
+      this.$emit('onReset');
+    },
+    validateForm () {
+      return this.form.title !== '' && !this.form.link !== '' && this.isValidLink(this.form.link);
+    },
+    isValidLink (string) {
+      let url;
+
+      try {
+        url = new URL(string);
+      } catch (_) {
+        return false;
+      }
+
+      return url.protocol === "http:" || url.protocol === "https:";
     }
   }
 }

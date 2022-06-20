@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LinkController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/admin', function() {
     return view('admin');
 });
+
+Route::resource('links', LinkController::class)->except([
+    'create', 'show', 'edit'
+]);

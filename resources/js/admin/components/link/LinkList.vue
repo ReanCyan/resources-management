@@ -1,5 +1,5 @@
 <template>
-  <el-table :data="tableData" style="width: 100%">
+  <el-table :data="list" style="width: 100%">
     <el-table-column prop="title" label="Title" />
     <el-table-column label="Actions">
       <template #default="scope">
@@ -31,25 +31,20 @@ export default {
     return {
       Edit: ref('Edit'),
       Delete: ref('Delete'),
-      tableData: [
-        {
-          title: 'Title 1'
-        },
-        {
-          title: 'Title 2'
-        },
-        {
-          title: 'Title 3'
-        }
-      ]
+    }
+  },
+  props: {
+    list: {
+      type: Array,
+      required: true
     }
   },
   methods: {
     handleEdit (index, row) {
-      console.log(index, row);
+      this.$emit('onEdit', row);
     },
     handleDelete (index, row) {
-      console.log(index, row);
+      this.$emit('onDelete', row.id);
     }
   }
 }
