@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LinkController;
+use App\Http\Controllers\HtmlSnippetController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,5 +20,9 @@ Route::get('/admin', function() {
 });
 
 Route::resource('links', LinkController::class)->except([
+    'create', 'show', 'edit'
+]);
+
+Route::resource('html_snippets', HtmlSnippetController::class)->except([
     'create', 'show', 'edit'
 ]);

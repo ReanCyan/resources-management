@@ -14,8 +14,8 @@
     </el-form-item>
 
     <el-form-item>
-      <el-button type="primary" @click="onSubmit()" :icon="CirclePlus" plain> Create </el-button>
-      <el-button @click="resetForm()"> Reset </el-button>
+      <el-button :type="submitBtn.type" @click="handleSubmit()" :icon="submitBtn.icon" plain> {{ submitBtn.text }} </el-button>
+      <el-button @click="handleReset()"> Reset </el-button>
     </el-form-item>
 
   </el-form>
@@ -23,30 +23,58 @@
 
 <script>
 import { ref } from 'vue';
+import { ElMessage } from 'element-plus';
 
-function getDefaultForm() {
+function getSubmitBtnDefault () {
   return {
-    title: '',
-    html: '',
-    description: ''
-  };
+    icon: ref('CirclePlus'),
+    type: 'primary',
+    text: 'Create'
+  }
 }
 
 export default {
   name: 'HtmlSnippetForm',
   data () {
     return {
-      CirclePlus: ref('CirclePlus'),
-      labelPosition: ref('top'),
-      form: getDefaultForm()
+      submitBtn: getSubmitBtnDefault(),
+      labelPosition: ref('top')
+    }
+  },
+  props: {
+    form: {
+      type: Object,
+      required: true
+    }
+  },
+  watch: {
+    form (newVal, oldVal) {
+      if(newVal.isEdit) {
+        this.submitBtn.icon = ref('Edit');
+        this.submitBtn.type = 'warning';
+        this.submitBtn.text = 'Edit';
+      }
+      else {
+        this.submitBtn.icon = ref('CirclePlus');
+        this.submitBtn.type = 'primary';
+        this.submitBtn.text = 'Create';
+      }
     }
   },
   methods: {
-    onSubmit () {
-      console.log(this.form);
+    handleSubmit () {
+      if (!this.validateForm()) {
+        ElMessage.error('Please fill all fields correctly!');
+        return;
+      }
+
+      this.$emit('onSubmit', this.form);
     },
-    resetForm () {
-      this.form = getDefaultForm();
+    handleReset () {
+      this.$emit('onReset');
+    },
+    validateForm () {
+      return this.form.title !== '' && this.form.description !== '' && this.form.html !== '';
     }
   }
 }
