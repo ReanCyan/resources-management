@@ -40,6 +40,12 @@ export default {
       submitBtn: getSubmitBtnDefault()
     }
   },
+  props: {
+    form: {
+      type: Object,
+      required: true
+    }
+  },
   watch: {
     form (newVal, oldVal) {
       if(newVal.isEdit) {
@@ -52,12 +58,6 @@ export default {
         this.submitBtn.type = 'primary';
         this.submitBtn.text = 'Create';
       }
-    }
-  },
-  props: {
-    form: {
-      type: Object,
-      required: true
     }
   },
   methods: {
@@ -73,7 +73,7 @@ export default {
       this.$emit('onReset');
     },
     validateForm () {
-      return this.form.title !== '' && !this.form.link !== '' && this.isValidLink(this.form.link);
+      return this.form.title !== '' && this.form.link !== '' && this.isValidLink(this.form.link);
     },
     isValidLink (string) {
       let url;
