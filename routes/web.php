@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PdfController;
 use App\Http\Controllers\LinkController;
 use App\Http\Controllers\HtmlSnippetController;
 
@@ -25,4 +26,11 @@ Route::resource('links', LinkController::class)->except([
 
 Route::resource('html_snippets', HtmlSnippetController::class)->except([
     'create', 'show', 'edit'
+]);
+
+// Not getting data in put request need to debug
+Route::post('pdfs/{pdf}', [PdfController::class, 'update']);
+
+Route::resource('pdfs', PdfController::class)->except([
+    'create', 'show', 'edit', 'update'
 ]);

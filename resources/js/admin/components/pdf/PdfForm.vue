@@ -7,17 +7,22 @@
 
     <el-form-item label="PDF">
       <el-upload
+        accept=".pdf"
         action=""
         :auto-upload="false"
         :show-file-list="false"
+        :multiple="false"
         :on-change="handleFileChange"
       >
         <template #trigger>
           <el-button plain>Select file</el-button>
         </template>
         <template #tip>
-          <div id="file-name">
-            No File Chosen
+          <div>
+            {{ form.fileName }}
+            <el-link v-if="this.form.url" :href="this.form.url" :icon="viewIcon" target="_blank">
+              View
+            </el-link>
           </div>
           <div class="el-upload__tip">
             PDF files with a size less than 10MB
@@ -27,8 +32,8 @@
     </el-form-item>
 
     <el-form-item>
-      <el-button type="primary" @click="onSubmit" :icon="CirclePlus" plain> Create </el-button>
-      <el-button @click="resetForm(form)"> Reset </el-button>
+      <el-button :type="submitBtn.type" @click="handleSubmit()" :icon="submitBtn.icon" plain> {{ submitBtn.text }} </el-button>
+      <el-button @click="handleReset()"> Reset </el-button>
     </el-form-item>
 
   </el-form>
@@ -36,34 +41,66 @@
 
 <script>
 import { ref } from 'vue';
+import { ElMessage } from 'element-plus';
 
-function getDefaultForm() {
+function getSubmitBtnDefault () {
   return {
-    title: '',
-    file: ''
-  };
+    icon: ref('CirclePlus'),
+    type: 'primary',
+    text: 'Create'
+  }
 }
 
 export default {
   name: 'PdfForm',
   data () {
     return {
-      CirclePlus: ref('CirclePlus'),
-      form: getDefaultForm()
+      viewIcon: ref('View'),
+      submitBtn: getSubmitBtnDefault()
+    }
+  },
+  props: {
+    form: {
+      type: Object,
+      required: true
+    }
+  },
+  watch: {
+    form (newVal, oldVal) {
+      if(newVal.isEdit) {
+        this.submitBtn.icon = ref('Edit');
+        this.submitBtn.type = 'warning';
+        this.submitBtn.text = 'Edit';
+      }
+      else {
+        this.submitBtn = getSubmitBtnDefault();
+      }
     }
   },
   methods: {
-    onSubmit () {
-      console.log(this.form);
+    handleSubmit () {
+      if (!this.validateForm()) {
+        ElMessage.error('Please fill all fields correctly!');
+        return;
+      }
+      this.$emit('onSubmit', this.form);
     },
-    resetForm () {
-      this.form = getDefaultForm();
-      document.getElementById('file-name').textContent = 'No File Chosen';
+    handleReset () {
+      this.$emit('onReset');
     },
     handleFileChange (file) {
-      file = file.raw;
-      this.form.file = file;
-      document.getElementById('file-name').textContent = file.name;
+      this.form.file = file.raw;
+      this.form.fileName = file.raw.name;
+    },
+    validateForm () {
+      if(this.form.isEdit && !this.form.file) {
+        return this.form.title !== '';
+      }
+      return this.form.title !== '' && this.form.file && this.checkMaxSize(10);
+    },
+    // size in MB
+    checkMaxSize (size) {
+      return this.form.file.size < 1024 * 1024 * size;
     }
   }
 }

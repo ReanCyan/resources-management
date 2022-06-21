@@ -1,5 +1,5 @@
 <template>
-  <el-form :model="form" status-icon>
+  <el-form :model="form">
 
     <el-form-item label="Title">
       <el-input v-model="form.title" />
@@ -54,9 +54,7 @@ export default {
         this.submitBtn.text = 'Edit';
       }
       else {
-        this.submitBtn.icon = ref('CirclePlus');
-        this.submitBtn.type = 'primary';
-        this.submitBtn.text = 'Create';
+        this.submitBtn = getSubmitBtnDefault();
       }
     }
   },

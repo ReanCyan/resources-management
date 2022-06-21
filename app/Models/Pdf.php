@@ -17,6 +17,13 @@ class Pdf extends Model
     /** @var array */
     protected $appends = ['url'];
 
+    public function location(): Attribute
+    {
+        return new Attribute(
+            set: fn($value) => $this->trimSlash($value)
+        );
+    }
+
     public function path(): Attribute
     {
         return Attribute::get(fn() => $this->location. '/' .$this->unique_name. '.' .$this->extension);
@@ -25,5 +32,13 @@ class Pdf extends Model
     public function url(): Attribute
     {
         return Attribute::get(fn() => Storage::url($this->path));
+    }
+
+    function trimSlash(string $string): string
+    {
+        // Replace multiple slash from string
+        $string = preg_replace('#/+#', '/', $string);
+
+        return trim($string, '/');   // Remove slash from front and end
     }
 }

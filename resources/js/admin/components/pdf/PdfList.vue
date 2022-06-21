@@ -1,5 +1,5 @@
 <template>
-  <el-table :data="tableData" style="width: 100%">
+  <el-table :data="list" style="width: 100%">
     <el-table-column prop="title" label="Title" />
     <el-table-column label="Actions">
       <template #default="scope">
@@ -9,16 +9,14 @@
           :icon="Edit"
           @click="handleEdit(scope.$index, scope.row)"
         >
-        </el-button
-        >
+        </el-button>
         <el-button
           plain
           type="danger"
           :icon="Delete"
           @click="handleDelete(scope.$index, scope.row)"
         >
-        </el-button
-        >
+        </el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -32,26 +30,21 @@ export default {
   data () {
     return {
       Edit: ref('Edit'),
-      Delete: ref('Delete'),
-      tableData: [
-        {
-          title: 'Title 1'
-        },
-        {
-          title: 'Title 2'
-        },
-        {
-          title: 'Title 3'
-        }
-      ]
+      Delete: ref('Delete')
+    }
+  },
+  props: {
+    list: {
+      type: Array,
+      required: true
     }
   },
   methods: {
     handleEdit (index, row) {
-      console.log(index, row);
+      this.$emit('onEdit', row);
     },
     handleDelete (index, row) {
-      console.log(index, row);
+      this.$emit('onDelete', row.id);
     }
   }
 }
