@@ -15,7 +15,7 @@ class Pdf extends Model
     protected $guarded = ['id'];
 
     /** @var array */
-    protected $appends = ['url'];
+    protected $appends = ['url', 'download_url'];
 
     public function location(): Attribute
     {
@@ -32,6 +32,11 @@ class Pdf extends Model
     public function url(): Attribute
     {
         return Attribute::get(fn() => Storage::url($this->path));
+    }
+
+    public function downloadUrl(): Attribute
+    {
+        return Attribute::get(fn() => route('pdfs.download', $this->id));
     }
 
     function trimSlash(string $string): string

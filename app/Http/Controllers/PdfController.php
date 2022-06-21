@@ -63,4 +63,15 @@ class PdfController extends BaseController
         $this->service->destroy($pdf);
         return $this->sendResponseAjax('Pdf Resource deleted Successfully');
     }
+
+    /**
+     * Download the specified resource from storage.
+     *
+     * @param  Pdf    $pdf
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse
+     */
+    public function download(Pdf $pdf)
+    {
+        return $this->service->downloadFile($pdf);;
+    }
 }

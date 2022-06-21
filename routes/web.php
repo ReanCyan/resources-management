@@ -16,6 +16,10 @@ use App\Http\Controllers\HtmlSnippetController;
 |
 */
 
+Route::get('/', function() {
+    return view('visitor');
+});
+
 Route::get('/admin', function() {
     return view('admin');
 });
@@ -29,7 +33,9 @@ Route::resource('html_snippets', HtmlSnippetController::class)->except([
 ]);
 
 // Not getting data in put request need to debug
-Route::post('pdfs/{pdf}', [PdfController::class, 'update']);
+Route::post('pdfs/{pdf}', [PdfController::class, 'update'])->name('pdfs.update');
+
+Route::get('pdfs/{pdf}/download', [PdfController::class, 'download'])->name('pdfs.download');
 
 Route::resource('pdfs', PdfController::class)->except([
     'create', 'show', 'edit', 'update'

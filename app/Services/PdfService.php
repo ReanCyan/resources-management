@@ -109,4 +109,18 @@ class PdfService
             Storage::delete($path);
         }
     }
+
+
+    /**
+     * Download file from storage.
+     *
+     * @param  Pdf    $pdf
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse
+     */
+    public function downloadFile(Pdf $pdf)
+    {
+        return Storage::download($pdf->path, $pdf->original_name, [
+            'Content-Type' => 'application/pdf'
+        ]);
+    }
 }
