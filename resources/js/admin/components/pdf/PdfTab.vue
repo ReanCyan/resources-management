@@ -45,7 +45,7 @@ export default {
   name: 'PdfTab',
   data () {
     return {
-      url: 'http://localhost:8000/pdfs',
+      url: `http://${window.location.host}/pdfs`,
       form: getDefaultForm(),
       list: [],
       loading: ref(false)

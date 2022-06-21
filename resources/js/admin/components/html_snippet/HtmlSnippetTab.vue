@@ -45,7 +45,7 @@ export default {
   name: 'HtmlSnippetTab',
   data () {
     return {
-      url: 'http://localhost:8000/html_snippets',
+      url: `http://${window.location.host}/html_snippets`,
       form: getDefaultForm(),
       list: [],
       loading: ref(false)

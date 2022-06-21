@@ -1,6 +1,9 @@
 <template>
-  <el-icon :size="25"><SetUp/></el-icon>
-  Resources Management
+  <el-icon :size="20"><SetUp/></el-icon>
+
+  <el-link :href="adminUrl">
+    Go to Admin
+  </el-link>
 
   <el-switch
     v-model="isLight"
@@ -21,6 +24,7 @@ export default {
       isLight: false,
       Moon: ref('Moon'),
       Sunny: ref('Sunny'),
+      adminUrl: `http://${window.location.host}/admin`
     }
   },
   watch: {

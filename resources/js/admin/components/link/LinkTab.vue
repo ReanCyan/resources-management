@@ -45,7 +45,7 @@ export default {
   name: 'LinkTab',
   data () {
     return {
-      url: 'http://localhost:8000/links',
+      url: `http://${window.location.host}/links`,
       form: getDefaultForm(),
       list: [],
       loading: ref(false)
