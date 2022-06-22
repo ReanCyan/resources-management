@@ -11,7 +11,7 @@ php artisan key:generate
 ```
 
 Set up database and file driver variables
-> Note: Use of 'local' or 'public' disk will required correct ownership and permission for '/storage' foler.
+> Note: Use of 'local' or 'public' disk will required correct ownership and permission for '/storage' folder.
 
 When using 'public' disk generate symbolic link by running
 ```sh
@@ -23,7 +23,7 @@ Run database migrations
 php artisan migrate
 ```
 
-User seeder to fill data for 'html_snippets' and 'links' table
+Use seeder to fill data for 'html_snippets' and 'links' table
 ```sh
 php artisan db:seed
 ```
