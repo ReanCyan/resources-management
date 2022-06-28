@@ -22,7 +22,7 @@ Route::get('/', function() {
 
 Route::get('/admin', function() {
     return view('admin');
-});
+})->name('admin');
 
 Route::resource('links', LinkController::class)->except([
     'create', 'show', 'edit'
