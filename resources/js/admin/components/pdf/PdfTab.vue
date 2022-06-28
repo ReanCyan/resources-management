@@ -79,6 +79,7 @@ export default {
       }
 
       if(form.isEdit) {
+        formData.append('_method', 'PATCH');
         this.editResource(formData, form.id);
       }
       else {
