@@ -18,7 +18,7 @@ use App\Http\Controllers\HtmlSnippetController;
 
 Route::get('/', function() {
     return view('visitor');
-});
+})->name('visitor');
 
 Route::get('/admin', function() {
     return view('admin');
