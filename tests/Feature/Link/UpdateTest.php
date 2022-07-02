@@ -52,7 +52,7 @@ class UpdateTest extends TestCase
         $response->assertSessionHasErrors('title');
     }
 
-    public function test_title_must_be_255_character_max()
+    public function test_title_must_not_be_greater_than_255_character()
     {
         $response = $this->put(route('links.update', ['link' => $this->linkModel->id]), [
             'title'           => $this->faker->sentence(200),
@@ -73,7 +73,7 @@ class UpdateTest extends TestCase
         $response->assertSessionHasErrors('link');
     }
 
-    public function test_link_must_be_255_character_max()
+    public function test_link_must_not_be_greater_than_255_character()
     {
         $domain = str_replace(' ', '', $this->faker->sentence(200));
         $link = "http://www.{$domain}.com";
@@ -108,7 +108,7 @@ class UpdateTest extends TestCase
         $response->assertSessionHasErrors('open_in_new_tab');
     }
 
-    public function test_open_in_new_tab_is_boolean()
+    public function test_open_in_new_tab_must_be_boolean()
     {
         $response = $this->put(route('links.update', ['link' => $this->linkModel->id]), [
             'title'           => $this->faker->sentence(10),

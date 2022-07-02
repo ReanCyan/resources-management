@@ -34,7 +34,7 @@ class StoreTest extends TestCase
         $response->assertSessionHasErrors('title');
     }
 
-    public function test_title_must_be_255_character_max()
+    public function test_title_must_not_be_greater_than_255_character()
     {
 
         $response = $this->post(route('links.store'), [
@@ -56,7 +56,7 @@ class StoreTest extends TestCase
         $response->assertSessionHasErrors('link');
     }
 
-    public function test_link_must_be_255_character_max()
+    public function test_link_must_not_be_greater_than_255_character()
     {
         $domain = str_replace(' ', '', $this->faker->sentence(200));
         $link = "http://www.{$domain}.com";
@@ -91,7 +91,7 @@ class StoreTest extends TestCase
         $response->assertSessionHasErrors('open_in_new_tab');
     }
 
-    public function test_open_in_new_tab_is_boolean()
+    public function test_open_in_new_tab_must_be_boolean()
     {
         $response = $this->post(route('links.store'), [
             'title'           => $this->faker->sentence(10),
