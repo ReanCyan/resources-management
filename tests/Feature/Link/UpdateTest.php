@@ -35,9 +35,11 @@ class UpdateTest extends TestCase
         $response->assertOk();
         $response->assertJson(['success' => true]);
 
-        $this->assertEquals($title, Link::first()->title);
-        $this->assertEquals($link, Link::first()->link);
-        $this->assertEquals($openInNewTab, Link::first()->open_in_new_tab);
+        $newLink = Link::first();
+
+        $this->assertEquals($title, $newLink->title);
+        $this->assertEquals($link, $newLink->link);
+        $this->assertEquals($openInNewTab, $newLink->open_in_new_tab);
     }
 
     public function test_title_is_required()
