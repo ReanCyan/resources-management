@@ -1,13 +1,13 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Link;
 
 use Tests\TestCase;
 use App\Models\Link;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class LinkUpdateTest extends TestCase
+class UpdateTest extends TestCase
 {
     use WithFaker, RefreshDatabase;
 
