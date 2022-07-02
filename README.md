@@ -34,3 +34,8 @@ php artisan serve
 ```
 
 Site will be available at `http://127.0.0.1:8000` or `http://localhost:8000`
+
+Running Tests
+```sh
+php artisan test
+```
